@@ -13,10 +13,32 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    networks:
+      - internal
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.link-tracker-api.rule=Host(`link-tracker.doodler.dev`) && PathPrefix(`/api/`,`/health`)"
+      - "traefik.http.routers.link-tracker-api.entrypoints=websecure"
+      - "traefik.http.routers.link-tracker-api.tls.certresolver=le"
+      - "traefik.http.services.link-tracker-api.loadbalancer.server.port=3001"
+      # Short code redirects (6-char alphanumeric)
+      - "traefik.http.routers.link-tracker-redirect.rule=Host(`link-tracker.doodler.dev`) && PathRegexp(`^/[A-Za-z0-9_-]{6}$$`)"
+      - "traefik.http.routers.link-tracker-redirect.entrypoints=websecure"
+      - "traefik.http.routers.link-tracker-redirect.tls.certresolver=le"
+      - "traefik.http.routers.link-tracker-redirect.service=link-tracker-api"
 
   frontend:
     build: ./frontend
     restart: unless-stopped
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.link-tracker.rule=Host(`link-tracker.doodler.dev`)"
+      - "traefik.http.routers.link-tracker.entrypoints=websecure"
+      - "traefik.http.routers.link-tracker.tls.certresolver=le"
+      - "traefik.http.services.link-tracker.loadbalancer.server.port=80"
 
   db:
     image: postgres:17-alpine
@@ -27,6 +49,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
@@ -35,23 +59,17 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
+    networks:
+      - internal
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       retries: 5
 
-  nginx:
-    image: nginx:alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-    depends_on:
-      - backend
-      - frontend
-
 volumes:
   pgdata:
+
+networks:
+  internal:
+  traefik-public:
+    external: true
