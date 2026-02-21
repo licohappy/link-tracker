@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { pool, migrate } from './db/index.js'
 import { linksRouter } from './routes/links.js'
 import { redirectRouter } from './routes/redirect.js'
 
@@ -17,4 +18,7 @@ app.use('/', redirectRouter)
 
 app.get('/health', (req, res) => res.json({ ok: true }))
 
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`))
+// Run migrations then start
+migrate()
+  .then(() => app.listen(PORT, () => console.log(`Backend running on port ${PORT}`)))
+  .catch(err => { console.error('Migration failed:', err); process.exit(1) })
