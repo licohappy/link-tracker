@@ -1,0 +1,37 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+
+.app { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+
+header { margin-bottom: 2rem; }
+header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+header p { color: #94a3b8; }
+
+.create-form { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+.create-form input {
+  flex: 1; padding: 0.75rem 1rem; border-radius: 8px;
+  border: 1px solid #334155; background: #1e293b; color: #e2e8f0; font-size: 1rem;
+}
+.create-form button, .result button {
+  padding: 0.75rem 1.5rem; border-radius: 8px; border: none;
+  background: #6366f1; color: white; font-size: 1rem; cursor: pointer;
+}
+.create-form button:hover, .result button:hover { background: #4f46e5; }
+
+.error { color: #f87171; margin-bottom: 1rem; }
+
+.result {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1rem; background: #1e293b; border-radius: 8px;
+  margin-bottom: 1.5rem; border: 1px solid #334155;
+}
+.result span { flex: 1; font-family: monospace; }
+
+.links-table { width: 100%; border-collapse: collapse; }
+.links-table th, .links-table td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid #1e293b; }
+.links-table th { color: #94a3b8; font-weight: 500; font-size: 0.875rem; }
+.links-table tr:hover td { background: #1e293b; }
+.links-table a { color: #818cf8; text-decoration: none; }
+.links-table a:hover { text-decoration: underline; }
+.links-table button { margin-left: 0.5rem; padding: 0.2rem 0.5rem; font-size: 0.75rem; background: #334155; border: none; border-radius: 4px; color: #e2e8f0; cursor: pointer; }
+.original-url { color: #94a3b8; font-size: 0.875rem; }

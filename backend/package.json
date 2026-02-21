@@ -1,0 +1,19 @@
+{
+  "name": "link-tracker-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "express": "^5.0.1",
+    "pg": "^8.13.3",
+    "nanoid": "^5.1.5",
+    "redis": "^4.7.0",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.5.0",
+    "rate-limit-redis": "^4.2.0",
+    "dotenv": "^16.4.7"
+  }
+}
