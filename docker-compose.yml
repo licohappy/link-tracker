@@ -18,7 +18,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.link-tracker-api.rule=Host(`link-tracker.doodler.dev`) && PathPrefix(`/api/`,`/health`)"
+      - "traefik.http.routers.link-tracker-api.rule=Host(`link-tracker.doodler.dev`) && PathPrefix(`/api/`) || PathPrefix(`/health`)"
       - "traefik.http.routers.link-tracker-api.entrypoints=websecure"
       - "traefik.http.routers.link-tracker-api.tls.certresolver=le"
       - "traefik.http.services.link-tracker-api.loadbalancer.server.port=3001"
