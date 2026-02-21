@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#111111"/>
+  <!-- Left chain link (horizontal oval) -->
+  <rect x="3" y="11" width="14" height="10" rx="5" ry="5"
+        fill="none" stroke="#C9A84C" stroke-width="2.8"/>
+  <!-- Right chain link (horizontal oval) -->
+  <rect x="15" y="11" width="14" height="10" rx="5" ry="5"
+        fill="none" stroke="#C9A84C" stroke-width="2.8"/>
+  <!-- Overlap mask: black bar over left link's right side to create chain effect -->
+  <rect x="17.5" y="12.4" width="5" height="7.2" fill="#111111"/>
+</svg>
